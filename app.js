@@ -50,7 +50,7 @@ app.get('/retrieve', function(req, res) {
 
 	// Find filename in Cassandra and return it
 	var getInfo = 'SELECT filename, contents FROM hw5.imgs WHERE filename = ?';
-	client.execute(getInfo, req.query.filename, function(err, result) {
+	client.execute(getInfo, [ req.query.filename ], function(err, result) {
 		if (err) {
 			res.status(404).send({ msg: err });
 		} else {
