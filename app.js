@@ -45,7 +45,7 @@ app.post('/deposit', upload.single('contents'), function(req, res) {
 
 app.get('/retrieve', function(req, res) {
 	console.log('Inside retrieve route');
-	console.log('filename: ', req.query);
+	console.log('filename: ', req.query.filename);
 	// var filename = req.body.filename;
 
 	// Find filename in Cassandra and return it
