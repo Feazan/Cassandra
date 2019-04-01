@@ -6,7 +6,7 @@ var cassandra = require('cassandra-driver');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
-var client = new cassandra.Client({ contactPoints: [ '127.0.0.1' ], keyspace: 'hw5' });
+var client = new cassandra.Client({ contactPoints: [ '127.0.0.1' ], keyspace: 'hw5 });
 client.connect(function(err, result) {
 	if (err) {
 		console.log('Error Occurred: ', err);
