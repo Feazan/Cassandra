@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var cassandra = require('cassandra-driver');
+var file = require('file-system');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 var upload = multer({ dest: 'uploads/' });
@@ -21,10 +22,10 @@ app.get('/', function(req, res) {
 	res.render('index');
 });
 
-var upsertInfo = 'INSERT INTO hw5.imgs(filename, contents) VALUES(?,?)';
 app.post('/deposit', upload.single('contents'), function(req, res) {
+	var upsertInfo = 'INSERT INTO hw5.imgs(filename, contents) VALUES(?,?)';
 	var filename = req.body.filename;
-	var contents = req.file;
+	var contents = new Buffer(file.readFileSync(req.file.path));
 
 	// Insert into Cassandra
 	console.log('Filename: ', filename, ' Contents: ', contents);
