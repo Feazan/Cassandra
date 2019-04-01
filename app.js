@@ -46,7 +46,7 @@ app.get('/retrieve', function(req, res) {
 		if (err) {
 			res.status(404).send({ msg: err });
 		} else {
-			console.log('User with email %s', result.rows[0].email);
+			console.log('Row content: %s', result.rows[0].filename);
 			res.send({ status: 'OK' });
 		}
 	});
