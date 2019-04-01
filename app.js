@@ -9,7 +9,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var upload = multer({ dest: 'uploads/' });
 app.set('view engine', 'ejs');
 
-var client = new cassandra.Client({ contactPoints: [ '127.0.0.1' ], localDataCenter: 'datacenter1', keyspace: 'hw5' });
+var client = new cassandra.Client({
+	contactPoints: [ '127.0.0.1:9042' ],
+	localDataCenter: 'datacenter1',
+	keyspace: 'hw5'
+});
 client.connect(function(err, result) {
 	if (err) {
 		console.log('Error Occurred: ', err);
@@ -41,12 +45,12 @@ app.post('/deposit', upload.single('contents'), function(req, res) {
 
 app.get('/retrieve', function(req, res) {
 	console.log('Inside retrieve route');
-	console.log('req.body: ', req.body);
+	console.log('filename: ', req.query);
 	// var filename = req.body.filename;
 
 	// Find filename in Cassandra and return it
 	var getInfo = 'SELECT filename, contents FROM hw5.imgs WHERE filename = ?';
-	client.execute(getInfo, 'someone', function(err, result) {
+	client.execute(getInfo, req.query.filename, function(err, result) {
 		if (err) {
 			res.status(404).send({ msg: err });
 		} else {
