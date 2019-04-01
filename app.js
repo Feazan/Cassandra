@@ -1,8 +1,10 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
 var multer = require('multer');
 var cassandra = require('cassandra-driver');
 
+app.use(bodyParser.urlencoded({ extended: true }));
 var upload = multer({ dest: 'uploads/' });
 app.set('view engine', 'ejs');
 
