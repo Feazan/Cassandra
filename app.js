@@ -55,7 +55,7 @@ app.get('/retrieve', function(req, res) {
 			res.status(404).send({ msg: err });
 		} else {
 			console.log('Row content: %s', result.rows);
-			res.setHeader({ 'Content-Type': req.query.filename.split('.')[1] });
+			res.setHeader({ 'Content-Type': 'image/' + req.query.filename.split('.')[1] });
 			res.end(result.rows[0].contents);
 		}
 	});
