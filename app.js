@@ -24,7 +24,7 @@ app.get('/', function(req, res) {
 var upsertInfo = 'INSERT INTO hw5.imgs(filename, contents) VALUES(?,?)';
 app.post('/deposit', upload.single('contents'), function(req, res) {
 	var filename = req.body.filename;
-	var contents = req.body.contents;
+	var contents = req.file;
 
 	// Insert into Cassandra
 	console.log('Filename: ', filename, ' Contents: ', contents);
