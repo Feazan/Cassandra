@@ -41,6 +41,15 @@ app.get('/retrieve', function(req, res) {
 	var filename = req.body.filename;
 
 	// Find filename in Cassandra and return it
+	var getInfo = 'SELECT filename, contents FROM hw5.imgs WHERE filename = ?';
+	client.execute(getInfo, [ 'someone' ], function(err, result) {
+		if (err) {
+			res.status(404).send({ msg: err });
+		} else {
+			console.log('User with email %s', result.rows[0].email);
+			res.send({ status: 'OK' });
+		}
+	});
 });
 
 app.listen(3000, function() {
