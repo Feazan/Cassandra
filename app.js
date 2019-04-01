@@ -40,8 +40,8 @@ app.post('/deposit', upload.single('contents'), function(req, res) {
 
 app.get('/retrieve', function(req, res) {
 	console.log('Inside retrieve route');
-	console.log('req.body: ', req.body);
-	var filename = req.body.filename;
+	// console.log('req.body: ', req.body);
+	// var filename = req.body.filename;
 
 	// Find filename in Cassandra and return it
 	var getInfo = 'SELECT filename, contents FROM hw5.imgs WHERE filename = ?';
@@ -49,7 +49,7 @@ app.get('/retrieve', function(req, res) {
 		if (err) {
 			res.status(404).send({ msg: err });
 		} else {
-			console.log('Row content: %s', result.rows[0].filename);
+			console.log('Row content: %s', result.rows[0]);
 			res.send({ status: 'OK' });
 		}
 	});
