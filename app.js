@@ -1,9 +1,9 @@
 var express = require('express');
 var app = express();
-var bodyParser = require('body-parser');
+var multer = require('multer');
 var cassandra = require('cassandra-driver');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+var upload = multer({ dest: 'uploads/' });
 app.set('view engine', 'ejs');
 
 var client = new cassandra.Client({ contactPoints: [ '127.0.0.1' ], localDataCenter: 'datacenter1', keyspace: 'hw5' });
@@ -20,7 +20,7 @@ app.get('/', function(req, res) {
 });
 
 var upsertInfo = 'INSERT INTO hw5.imgs(filename, contents) VALUES(?,?)';
-app.post('/deposit', function(req, res) {
+app.post('/deposit', upload.single('contents'), function(req, res) {
 	var filename = req.body.filename;
 	var contents = req.body.contents;
 
